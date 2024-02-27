@@ -1,27 +1,29 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { toast } from 'sonner'
 
 export function NewNoteCard(){
 
-  const [shoundShowOnboarding, setHoundShowOnboarding] = useState(true)
+  const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true)
   const [content, setContent] = useState('')
 
   function handleStartEditor(){
-    setHoundShowOnboarding(false)
+    setShouldShowOnboarding(false)
   }
   
   function handleContentChenged(event: ChangeEvent<HTMLTextAreaElement>){
     setContent(event.target.value)
     if(!event.target.value){
-      setHoundShowOnboarding(true)
+      setShouldShowOnboarding(true)
     }
   }
 
   function handleSaveNote(event: FormEvent){
     event.preventDefault()
     console.log(content);
-    
+    toast.success('Nota criada com sucesso!')
+    setShouldShowOnboarding(true)
   }
 
   return (
@@ -48,7 +50,7 @@ export function NewNoteCard(){
               Adicionar nota
             </span>
 
-            {shoundShowOnboarding ? (
+            {shouldShowOnboarding ? (
               <p className='text-sm leading-6 text-slate-400'>
               Comece <button className='font-medium text-lime-400 hover:underline'>gravando uma nota</button> em áudio ou se preferir <button onClick={handleStartEditor} className='font-medium text-lime-400 hover:underline'>utilize apenas texto</button>.
             </p>
